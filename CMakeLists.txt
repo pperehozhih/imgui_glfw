@@ -11,7 +11,8 @@ aux_source_directory(imgui SRC_FILE)
 file(GLOB HDR_FILE "imgui/*.h*")
 include_directories(src imgui)
 add_definitions(-DIMGUI_USER_CONFIG=<imconfig-glfw.h>)
-add_library(${PROJECT_NAME} ${SRC_FILE} ${HDR_FILE} glfw)
+add_library(${PROJECT_NAME} ${SRC_FILE} ${HDR_FILE})
+target_link_libraries(${PROJECT_NAME} debug glfw3d optimized glfw3)
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 11)
 
 INSTALL(FILES 
