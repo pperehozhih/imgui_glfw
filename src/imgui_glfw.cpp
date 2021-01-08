@@ -1,15 +1,24 @@
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#define GL_GLEXT_PROTOTYPES
+#define EGL_EGLEXT_PROTOTYPES
+#else
+extern "C" {
+    #include "examples/libs/gl3w/GL/gl3w.c"
+}
 #define IMGUI_IMPL_OPENGL_LOADER_CUSTOM "examples/libs/gl3w/GL/gl3w.h"
+#endif
 
 #include "backends/imgui_impl_opengl3.cpp"
 #include "backends/imgui_impl_glfw.cpp"
 #include "misc/cpp/imgui_stdlib.cpp"
 #include "misc/freetype/imgui_freetype.cpp"
-extern "C" {
-#include "examples/libs/gl3w/GL/gl3w.c"
-}
+
 #include "imgui.h"
 #include "imgui-glfw.h"
 #include <map>
+
+
 
 namespace ImGui
 {
@@ -42,7 +51,9 @@ namespace ImGui
         bool Init(GLFWwindow* window) {
             IMGUI_CHECKVERSION();
             ImGui::CreateContext();
-#ifdef __APPLE__
+#ifdef __EMSCRIPTEN__
+            const char* glsl_version = "#version 100";
+#elif __APPLE__
             // GL 3.2 + GLSL 150
             const char* glsl_version = "#version 150";
 #else
