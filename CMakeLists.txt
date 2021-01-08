@@ -4,7 +4,7 @@ project(imgui_glfw)
 
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-find_package(glfw3 3.3 REQUIRED)
+find_package(glfw3 3.2 REQUIRED)
 find_package(Freetype REQUIRED)
 find_package(OpenGL REQUIRED)
 aux_source_directory(src SRC_FILE)
