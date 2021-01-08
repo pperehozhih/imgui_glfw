@@ -3,7 +3,7 @@
 // #include <SFML/System/Vector2.hpp>
 // #include <SFML/Graphics/Color.hpp>
 
-#include "imgui-SFML_export.h"
+#include "imgui-glfw_export.h"
 
 // #define IM_VEC2_CLASS_EXTRA                                             \
 //     template <typename T>                                               \
