@@ -60,7 +60,11 @@ namespace ImGui
             // GL 3.0 + GLSL 130
             const char* glsl_version = "#version 130";
 #endif
+#ifdef __EMSCRIPTEN__
+            bool err = false;
+#else
             bool err = gl3wInit() != 0;
+#endif
             if (err)
             {
                 fprintf(stderr, "Failed to initialize OpenGL loader!\n");
