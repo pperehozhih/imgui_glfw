@@ -16,7 +16,11 @@ file(GLOB HDR_FILE "include/*.h*")
 include_directories(src imgui include imgui/examples/libs/gl3w ${FREETYPE_INCLUDE_DIRS})
 add_definitions(-DIMGUI_USER_CONFIG=<imconfig-glfw.h>)
 add_library(${PROJECT_NAME} ${SRC_FILE} ${HDR_FILE} ${HDR_IMGUI_FILE})
-target_link_libraries(${PROJECT_NAME} debug glfw3d optimized glfw3 ${FREETYPE_LIBRARIES} ${OPENGL_LIBRARIES})
+if (MSVC)
+    target_link_libraries(${PROJECT_NAME} debug glfw3d optimized glfw3 ${FREETYPE_LIBRARIES} ${OPENGL_LIBRARIES})
+else()
+    target_link_libraries(${PROJECT_NAME} glfw3 ${FREETYPE_LIBRARIES} ${OPENGL_LIBRARIES})
+endif()
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 11)
 
 install(FILES 
@@ -45,7 +49,7 @@ install(TARGETS ${PROJECT_NAME}
   ARCHIVE DESTINATION lib
 )
 
-# if(BUILD_EXAMPLE)
+if(BUILD_EXAMPLE)
     add_executable(example example/main.cpp)
     set(LIBRARY_DEPT)
     if (APPLE)
@@ -60,4 +64,4 @@ install(TARGETS ${PROJECT_NAME}
     endif()
     target_link_libraries(example ${PROJECT_NAME})
     set_property(TARGET example PROPERTY CXX_STANDARD 11)
-# endif(BUILD_EXAMPLE)
+endif(BUILD_EXAMPLE)
