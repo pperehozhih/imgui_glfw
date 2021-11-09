@@ -3,13 +3,12 @@
 #define GL_GLEXT_PROTOTYPES
 #define EGL_EGLEXT_PROTOTYPES
 #else
-extern "C" {
-    #include "examples/libs/gl3w/GL/gl3w.c"
-}
 #define IMGUI_IMPL_OPENGL_LOADER_CUSTOM "examples/libs/gl3w/GL/gl3w.h"
 #endif
+#define GL_SILENCE_DEPRECATION
+#include <GLFW/glfw3.h>
 
-#include "backends/imgui_impl_opengl3.cpp"
+#include "backends/imgui_impl_opengl2.cpp"
 #include "backends/imgui_impl_glfw.cpp"
 #include "misc/cpp/imgui_stdlib.cpp"
 #include "misc/freetype/imgui_freetype.cpp"
@@ -52,18 +51,9 @@ namespace ImGui
             IMGUI_CHECKVERSION();
             ImGui::CreateContext();
 #ifdef __EMSCRIPTEN__
-            const char* glsl_version = "#version 100";
-#elif __APPLE__
-            // GL 3.2 + GLSL 150
-            const char* glsl_version = "#version 150";
-#else
-            // GL 3.0 + GLSL 130
-            const char* glsl_version = "#version 130";
-#endif
-#ifdef __EMSCRIPTEN__
             bool err = false;
 #else
-            bool err = gl3wInit() != 0;
+            bool err = glfwInit() != 0;
 #endif
             if (err)
             {
@@ -74,20 +64,21 @@ namespace ImGui
                 fprintf(stderr, "Failed to initialize imgui OpenGL!\n");
                 return false;
             }
-            if (!ImGui_ImplOpenGL3_Init(glsl_version)) {
+            if (!ImGui_ImplOpenGL2_Init()) {
                 fprintf(stderr, "Failed to initialize imgui!\n");
                 return false;
             }
             return true;
         }
         void UpdateFontTexture() {
-            if (g_FontTexture) {
-                ImGui_ImplOpenGL3_DestroyFontsTexture();
+            ImGui_ImplOpenGL2_Data* bd = ImGui_ImplOpenGL2_GetBackendData();
+            if (bd->FontTexture) {
+                ImGui_ImplOpenGL2_DestroyFontsTexture();
             }
-            ImGui_ImplOpenGL3_CreateFontsTexture();
+            ImGui_ImplOpenGL2_CreateFontsTexture();
         }
         void NewFrame() {
-            ImGui_ImplOpenGL3_NewFrame();
+            ImGui_ImplOpenGL2_NewFrame();
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
         }
@@ -98,7 +89,7 @@ namespace ImGui
             glViewport(0, 0, display_w, display_h);
             glClearColor(0, 0, 0, 0);
             glClear(GL_COLOR_BUFFER_BIT);
-            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+            ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
             auto&& texture = g_TexturesCache.begin();
             while (texture != g_TexturesCache.end()) {
                 texture->second.first--;
@@ -113,7 +104,7 @@ namespace ImGui
             }
         }
         void Shutdown() {
-            ImGui_ImplOpenGL3_Shutdown();
+            ImGui_ImplOpenGL2_Shutdown();
             ImGui_ImplGlfw_Shutdown();
             ImGui::DestroyContext();
         }
