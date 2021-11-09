@@ -41,8 +41,7 @@ install(FILES
 )
 
 install(FILES
-    imgui/examples/libs/gl3w/GL/gl3w.h
-    imgui/examples/libs/gl3w/GL/glcorearb.h
+    imgui/backends/imgui_impl_opengl3_loader.h
     DESTINATION include/GL
 )
 
