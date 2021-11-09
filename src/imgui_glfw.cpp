@@ -50,16 +50,6 @@ namespace ImGui
         bool Init(GLFWwindow* window) {
             IMGUI_CHECKVERSION();
             ImGui::CreateContext();
-#ifdef __EMSCRIPTEN__
-            bool err = false;
-#else
-            bool err = glfwInit() != 0;
-#endif
-            if (err)
-            {
-                fprintf(stderr, "Failed to initialize OpenGL loader!\n");
-                return false;
-            }
             if (!ImGui_ImplGlfw_InitForOpenGL(window, true)) {
                 fprintf(stderr, "Failed to initialize imgui OpenGL!\n");
                 return false;
