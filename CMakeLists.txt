@@ -19,11 +19,11 @@ add_library(${PROJECT_NAME} ${SRC_FILE} ${HDR_FILE} ${HDR_IMGUI_FILE})
 target_link_libraries(${PROJECT_NAME} debug glfw3d optimized glfw3 ${FREETYPE_LIBRARIES} ${OPENGL_LIBRARIES})
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 11)
 
-if(BUILD_EXAMPLE)
+# if(BUILD_EXAMPLE)
     add_executable(example example/main.cpp)
     target_link_libraries(example ${PROJECT_NAME})
     set_property(TARGET example PROPERTY CXX_STANDARD 11)
-endif(BUILD_EXAMPLE)
+# endif(BUILD_EXAMPLE)
 
 install(FILES 
     include/imconfig-glfw.h
