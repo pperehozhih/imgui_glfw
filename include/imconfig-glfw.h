@@ -4,6 +4,8 @@
 
 #include "imgui-glfw_export.h"
 
+#define IMGUI_ENABLE_FREETYPE
+
 #define IM_VEC2_CLASS_EXTRA                                              \
      ImVec2(const glm::vec2& v) {                                        \
          x = v.x;                                                        \
