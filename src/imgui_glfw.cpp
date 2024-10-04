@@ -8,9 +8,10 @@
 #define GL_SILENCE_DEPRECATION
 #include <GLFW/glfw3.h>
 
-#define GL_GLEXT_PROTOTYPES
-#define EGL_EGLEXT_PROTOTYPES
-#include "backends/imgui_impl_opengl3_loader.h"
+#if defined(__APPLE__)
+#include <OpenGL/gl3.h>
+#endif
+//#include "backends/imgui_impl_opengl3_loader.h"
 #include "backends/imgui_impl_opengl3.cpp"
 #include "backends/imgui_impl_glfw.cpp"
 #include "misc/cpp/imgui_stdlib.cpp"
