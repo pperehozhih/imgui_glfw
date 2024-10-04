@@ -8,7 +8,7 @@
 #define GL_SILENCE_DEPRECATION
 #include <GLFW/glfw3.h>
 
-#include "backends/imgui_impl_opengl2.cpp"
+#include "backends/imgui_impl_opengl3.cpp"
 #include "backends/imgui_impl_glfw.cpp"
 #include "misc/cpp/imgui_stdlib.cpp"
 #include "misc/freetype/imgui_freetype.cpp"
@@ -54,21 +54,21 @@ namespace ImGui
                 fprintf(stderr, "Failed to initialize imgui OpenGL!\n");
                 return false;
             }
-            if (!ImGui_ImplOpenGL2_Init()) {
+            if (!ImGui_ImplOpenGL3_Init()) {
                 fprintf(stderr, "Failed to initialize imgui!\n");
                 return false;
             }
             return true;
         }
         void UpdateFontTexture() {
-            ImGui_ImplOpenGL2_Data* bd = ImGui_ImplOpenGL2_GetBackendData();
+            ImGui_ImplOpenGL3_Data* bd = ImGui_ImplOpenGL2_GetBackendData();
             if (bd->FontTexture) {
-                ImGui_ImplOpenGL2_DestroyFontsTexture();
+                ImGui_ImplOpenGL3_DestroyFontsTexture();
             }
-            ImGui_ImplOpenGL2_CreateFontsTexture();
+            ImGui_ImplOpenGL3_CreateFontsTexture();
         }
         void NewFrame() {
-            ImGui_ImplOpenGL2_NewFrame();
+            ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
         }
@@ -79,7 +79,7 @@ namespace ImGui
             glViewport(0, 0, display_w, display_h);
             glClearColor(0, 0, 0, 0);
             glClear(GL_COLOR_BUFFER_BIT);
-            ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
+            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
             auto&& texture = g_TexturesCache.begin();
             while (texture != g_TexturesCache.end()) {
                 texture->second.first--;
@@ -94,7 +94,7 @@ namespace ImGui
             }
         }
         void Shutdown() {
-            ImGui_ImplOpenGL2_Shutdown();
+            ImGui_ImplOpenGL3_Shutdown();
             ImGui_ImplGlfw_Shutdown();
             ImGui::DestroyContext();
         }
