@@ -61,7 +61,7 @@ namespace ImGui
             return true;
         }
         void UpdateFontTexture() {
-            ImGui_ImplOpenGL3_Data* bd = ImGui_ImplOpenGL2_GetBackendData();
+            ImGui_ImplOpenGL3_Data* bd = ImGui_ImplOpenGL3_GetBackendData();
             if (bd->FontTexture) {
                 ImGui_ImplOpenGL3_DestroyFontsTexture();
             }
