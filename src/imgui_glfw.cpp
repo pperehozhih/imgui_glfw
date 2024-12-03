@@ -10,6 +10,10 @@
 
 #if defined(__APPLE__)
 #include <OpenGL/gl3.h>
+#elif _WIN32
+#define GL_GLEXT_PROTOTYPES
+#undef GL_VERSION_1_1
+#include "backends/imgui_impl_opengl3_loader.h"
 #endif
 //#include "backends/imgui_impl_opengl3_loader.h"
 #include "backends/imgui_impl_opengl3.cpp"
