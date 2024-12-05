@@ -2,6 +2,7 @@
 #include <emscripten.h>
 #define GL_GLEXT_PROTOTYPES
 #define EGL_EGLEXT_PROTOTYPES
+#elif _WIN32
 #else
 #define IMGUI_IMPL_OPENGL_LOADER_CUSTOM "examples/libs/gl3w/GL/gl3w.h"
 #endif
@@ -14,6 +15,7 @@
 #define GL_GLEXT_PROTOTYPES
 #undef GL_VERSION_1_1
 #include "backends/imgui_impl_opengl3_loader.h"
+//#define IMGUI_IMPL_OPENGL_LOADER_CUSTOM
 #endif
 //#include "backends/imgui_impl_opengl3_loader.h"
 #include "backends/imgui_impl_opengl3.cpp"
