@@ -16,6 +16,8 @@
 #undef GL_VERSION_1_1
 #include "backends/imgui_impl_opengl3_loader.h"
 //#define IMGUI_IMPL_OPENGL_LOADER_CUSTOM
+#elif __linux__
+#include <GLES3/gl32.h>
 #endif
 //#include "backends/imgui_impl_opengl3_loader.h"
 #include "backends/imgui_impl_opengl3.cpp"
