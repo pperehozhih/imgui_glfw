@@ -33,10 +33,10 @@ namespace ImGui
         const glm::vec4& borderColor = glm::vec4(0));
 
     // ImageButton overloads
-    IMGUI_GLFW_API bool ImageButton(const GLFWimage& texture, const int framePadding = -1,
+    IMGUI_GLFW_API bool ImageButton(const char* _id, const GLFWimage& texture,
         const glm::vec4& bgColor = glm::vec4(0),
         const glm::vec4& tintColor = glm::vec4(1));
-    IMGUI_GLFW_API bool ImageButton(const GLFWimage& texture, const glm::vec2& size, const int framePadding = -1,
+    IMGUI_GLFW_API bool ImageButton(const char* _id, const GLFWimage& texture, const glm::vec2& size,
         const glm::vec4& bgColor = glm::vec4(0),
         const glm::vec4& tintColor = glm::vec4(1));
 

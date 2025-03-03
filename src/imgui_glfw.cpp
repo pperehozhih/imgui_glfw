@@ -130,18 +130,19 @@ namespace ImGui
     }
 
     // ImageButton overloads
-    bool ImageButton(const GLFWimage& texture, const int framePadding,
+    bool ImageButton(const char* _id, const GLFWimage& texture,
         const glm::vec4& bgColor,
         const glm::vec4& tintColor) {
-        return ImageButton(texture, glm::vec2(texture.width, texture.height), framePadding, bgColor, tintColor);
+        return ImageButton(_id, texture, glm::vec2(texture.width, texture.height), bgColor, tintColor);
     }
-    bool ImageButton(const GLFWimage& texture, const glm::vec2& size, const int framePadding,
+    bool ImageButton(const char* _id, const GLFWimage& texture, const glm::vec2& size, const int framePadding,
         const glm::vec4& bgColor,
         const glm::vec4& tintColor) {
         ImTextureID textureID =
             (ImTextureID)GLFW::GetNativeTexture(texture);
-        return ImGui::ImageButton(textureID, size, ImVec2(0, 0), ImVec2(1, 1), framePadding, bgColor,
+        return ImGui::ImageButton(_id, textureID, ImVec2(size.x, size.y), ImVec2(0, 0), ImVec2(1, 1), bgColor,
             tintColor);
+//        ImageButton(const char* str_id, ImTextureID user_texture_id, const ImVec2& image_size, const ImVec2& uv0 = ImVec2(0, 0), const ImVec2& uv1 = ImVec2(1, 1), const ImVec4& bg_col = ImVec4(0, 0, 0, 0), const ImVec4& tint_col = ImVec4(1, 1, 1, 1));
     }
 
     // Draw_list overloads. All positions are in relative coordinates (relative to top-left of the current window)
