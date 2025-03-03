@@ -135,7 +135,7 @@ namespace ImGui
         const glm::vec4& tintColor) {
         return ImageButton(_id, texture, glm::vec2(texture.width, texture.height), bgColor, tintColor);
     }
-    bool ImageButton(const char* _id, const GLFWimage& texture, const glm::vec2& size
+    bool ImageButton(const char* _id, const GLFWimage& texture, const glm::vec2& size,
         const glm::vec4& bgColor,
         const glm::vec4& tintColor) {
         ImTextureID textureID =
