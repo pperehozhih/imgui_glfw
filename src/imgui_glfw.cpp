@@ -84,10 +84,16 @@ namespace ImGui
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
         }
-        void Render(GLFWwindow* window) {
+        void Render(GLFWwindow* window, float w, float h) {
             ImGui::Render();
             int display_w, display_h;
             glfwGetFramebufferSize(window, &display_w, &display_h);
+            if (w != 0.0f) {
+                display_w = w;
+            }
+            if (h != 0.0f) {
+                display_h = h;
+            }
             glViewport(0, 0, display_w, display_h);
             glClearColor(0, 0, 0, 0);
             glClear(GL_COLOR_BUFFER_BIT);
