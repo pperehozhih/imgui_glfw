@@ -13,11 +13,13 @@ namespace ImGui
         IMGUI_GLFW_API bool Init(GLFWwindow* window);
         IMGUI_GLFW_API void UpdateFontTexture();
 
-        IMGUI_GLFW_API void NewFrame();
+        IMGUI_GLFW_API void NewFrame(float w = 0, float h = 0);
 
         IMGUI_GLFW_API void Render(GLFWwindow* window, float w = 0, float h = 0);
 
         IMGUI_GLFW_API void SetTextureUnloadInterval(int updateCount);
+    
+        IMGUI_GLFW_API void ForceUnloadImage(const GLFWimage& texture);
 
         IMGUI_GLFW_API void Shutdown();
     }

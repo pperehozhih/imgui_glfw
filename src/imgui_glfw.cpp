@@ -58,6 +58,14 @@ namespace ImGui
             g_TexturesCache[texture.pixels] = std::make_pair(g_UnloadTextureInterval, (ImTextureID)(intptr_t)gl_texture);
             return gl_texture;
         }
+    
+        void ForceUnloadImage(const GLFWimage& texture) {
+            auto&& found = g_TexturesCache.find(texture.pixels);
+            if (found != g_TexturesCache.end()) {
+                GLuint gl_texture = (GLuint)(intptr_t)found->second.second;
+                glDeleteTextures(1, &gl_texture);
+            }
+        }
 
         bool Init(GLFWwindow* window) {
             IMGUI_CHECKVERSION();
@@ -79,9 +87,45 @@ namespace ImGui
             }
             ImGui_ImplOpenGL3_CreateFontsTexture();
         }
-        void NewFrame() {
+        void ImGui_ImplGlfw_NewFrameThis(float _w, float _h)
+        {
+            ImGuiIO& io = ImGui::GetIO();
+            ImGui_ImplGlfw_Data* bd = ImGui_ImplGlfw_GetBackendData();
+            IM_ASSERT(bd != nullptr && "Context or backend not initialized! Did you call ImGui_ImplGlfw_InitForXXX()?");
+
+            // Setup display size (every frame to accommodate for window resizing)
+            int w, h;
+            int display_w, display_h;
+            glfwGetWindowSize(bd->Window, &w, &h);
+            if (_w == 0.0f || _h == 0.0f) {
+                glfwGetFramebufferSize(bd->Window, &display_w, &display_h);
+            } else {
+                display_w = _w;
+                display_h = _h;
+                w = _w;
+                h = _w;
+            }
+            io.DisplaySize = ImVec2((float)w, (float)h);
+            if (w > 0 && h > 0)
+                io.DisplayFramebufferScale = ImVec2((float)display_w / (float)w, (float)display_h / (float)h);
+
+            // Setup time step
+            // (Accept glfwGetTime() not returning a monotonically increasing value. Seems to happens on disconnecting peripherals and probably on VMs and Emscripten, see #6491, #6189, #6114, #3644)
+            double current_time = glfwGetTime();
+            if (current_time <= bd->Time)
+                current_time = bd->Time + 0.00001f;
+            io.DeltaTime = bd->Time > 0.0 ? (float)(current_time - bd->Time) : (float)(1.0f / 60.0f);
+            bd->Time = current_time;
+
+            ImGui_ImplGlfw_UpdateMouseData();
+            ImGui_ImplGlfw_UpdateMouseCursor();
+
+            // Update game controllers (if enabled and available)
+            ImGui_ImplGlfw_UpdateGamepads();
+        }
+        void NewFrame(float w, float h) {
             ImGui_ImplOpenGL3_NewFrame();
-            ImGui_ImplGlfw_NewFrame();
+            ImGui_ImplGlfw_NewFrameThis(w, h);
             ImGui::NewFrame();
         }
         void Render(GLFWwindow* window, float w, float h) {
